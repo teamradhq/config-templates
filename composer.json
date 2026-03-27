@@ -1,0 +1,56 @@
+{
+  "name": "teamradhq/config-templates",
+  "type": "composer-plugin",
+  "description": "Reusable configuration templates for various PHP tools.",
+  "minimum-stability": "stable",
+  "license": "ISC",
+  "autoload": {
+    "psr-4": {
+      "TeamRadHQ\\ConfigTemplates\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TeamRadHQ\\ConfigTemplates\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "class": "TeamRadHQ\\ConfigTemplates\\Composer\\Plugin"
+  },
+  "require": {
+    "php": "^8.2",
+    "composer-plugin-api": "*",
+    "guzzlehttp/guzzle": "^7.0",
+    "symfony/console": "^7.0|^8.0",
+    "symfony/filesystem": "^7.0|^8.0",
+    "symfony/process": "^7.0|^8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11|^12|^13",
+    "symfony/var-dumper": "^7.0|^8.0",
+    "phpstan/phpstan": "^2",
+    "rector/rector": "^2.3",
+    "mockery/mockery": "^1.6",
+    "laravel/pint": "^1.29",
+    "squizlabs/php_codesniffer": "^4.0",
+    "brianium/paratest": "^7.19",
+    "phpstan/extension-installer": "^1.4",
+    "phpstan/phpstan-mockery": "^2.0",
+    "phpstan/phpstan-phpunit": "^2",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "composer/composer": "^2.9"
+  },
+  "scripts": {
+    "phpcs": "phpcs --standard=phpcs.xml",
+    "pint": "pint --config=pint.json",
+    "rector": "rector process --config rector.php --ansi ",
+    "stan": "phpstan analyse --configuration=phpstan.neon",
+    "test": "cd php && phpunit --testdox --display-all-issues --configuration phpunit.xml"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
+  }
+}
