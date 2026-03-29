@@ -23,6 +23,7 @@
     "guzzlehttp/guzzle": "^7.0",
     "symfony/console": "^7.0|^8.0",
     "symfony/filesystem": "^7.0|^8.0",
+    "symfony/finder": "^7.0|^8.0",
     "symfony/process": "^7.0|^8.0"
   },
   "require-dev": {
@@ -45,7 +46,7 @@
     "pint": "pint --config=pint.json",
     "rector": "rector process --config rector.php --ansi ",
     "stan": "phpstan analyse --configuration=phpstan.neon",
-    "test": "cd php && phpunit --testdox --display-all-issues --configuration phpunit.xml"
+    "test": "phpunit --testdox --display-all-issues --configuration phpunit.xml"
   },
   "config": {
     "sort-packages": true,
