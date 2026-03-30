@@ -10,15 +10,19 @@ use TeamRadHQ\ConfigTemplates\Actions\Concerns\Result;
 use TeamRadHQ\ConfigTemplates\Actions\Concerns\State;
 
 /**
- * @implements Result<SplFileInfo>
+ * @implements Result<SplFileInfo[]>
  */
 final class FileInfoResult implements Result
 {
     private State $state = State::Pending;
 
-    private ?SplFileInfo $value = null;
+    /** @var SplFileInfo[] */
+    private array $value = [];
 
-    public function __construct(private readonly string $location) {}
+    /**
+     * @param array<array-key, string> $locations
+     */
+    public function __construct(private readonly array $locations) {}
 
     /**
      * {@inheritDoc}
@@ -52,13 +56,22 @@ final class FileInfoResult implements Result
 
     /**
      * {@inheritDoc}
+     *
+     * @return SplFileInfo[]
      */
-    public function value(): ?SplFileInfo
+    public function value(): array
     {
-        if (!$this->value instanceof SplFileInfo && $this->state === State::Success) {
-            $this->value = new SplFileInfo($this->location, '', '');
+        if ($this->state === State::Success && count($this->value) !== count($this->locations)) {
+            $this->setValue();
         }
 
         return $this->value;
+    }
+
+    private function setValue(): void
+    {
+        foreach ($this->locations as $key => $location) {
+            $this->value[$key] = new SplFileInfo($location, '', '');
+        }
     }
 }

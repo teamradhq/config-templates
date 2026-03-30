@@ -10,7 +10,7 @@ use TeamRadHQ\ConfigTemplates\Actions\Concerns\Action;
 use TeamRadHQ\ConfigTemplates\Actions\Concerns\Result;
 
 /**
- * @implements Concerns\Action<SplFileInfo>
+ * @implements Action<SplFileInfo>
  */
 final class UpdateConfig implements Action
 {

@@ -46,30 +46,32 @@ final class FileInfoResultTest extends TestCase
     #[TestDox('A pending result should be created with null status and value.')]
     public function test_it_can_be_created(): void
     {
-        $result = new FileInfoResult(__FILE__);
+        $result = new FileInfoResult([__FILE__]);
 
         self::assertSame(State::Pending, $result->state());
         self::assertNull($result->status());
-        self::assertNull($result->value());
+        self::assertEmpty($result->value());
     }
 
     #[TestDox('A $_dataName result should provide a status and value.')]
     #[DataProvider('finishedResults')]
     public function test_a_finished_result_has_a_value(State $state, int $status, ?SplFileInfo $value): void
     {
-        $result = new FileInfoResult(__FILE__);
+        $result = new FileInfoResult([__FILE__]);
         $result->state($state);
+
+        $actual = $result->value();
 
         self::assertSame($state, $result->state());
         self::assertSame($status, $result->status());
-        self::assertSame($value?->getFilename(), $result->value()?->getFilename());
+        self::assertSame($value?->getFilename(), array_shift($actual)?->getFilename());
     }
 
     #[TestDox('A $state result should not be able to transition to another state.')]
     #[DataProvider('finishedStates')]
     public function test_a_finished_result_should_not_change_state(State $state): void
     {
-        $result = new FileInfoResult(__FILE__);
+        $result = new FileInfoResult([__FILE__]);
         $result->state($state);
 
         $this->expectExceptionMessage('Cannot transition to a new state when action is already finished.');

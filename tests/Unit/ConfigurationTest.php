@@ -18,7 +18,7 @@ use TeamRadHQ\ConfigTemplates\Configuration;
 final class ConfigurationTest extends TestCase
 {
     /**
-     * @return Generator<string, array{string, Callable(Configuration): string}>
+     * @return Generator<string, array{string, callable(Configuration): string}>
      */
     public static function provideErrors(): Generator
     {
@@ -34,7 +34,7 @@ final class ConfigurationTest extends TestCase
     }
 
     /**
-     * @param Callable(Configuration): string $shouldThrow
+     * @param callable(Configuration): string $shouldThrow
      */
     #[TestDox('An error should occur when $_dataName.')]
     #[DataProvider('provideErrors')]
@@ -59,6 +59,7 @@ final class ConfigurationTest extends TestCase
         $expected = dirname(__DIR__, 2);
         $packageConfiguration = new Configuration;
 
+        self::assertSame($expected, $packageConfiguration->packageDir());
         self::assertSame($expected, $packageConfiguration->projectDir());
         self::assertSame(
             $expected . DIRECTORY_SEPARATOR . 'composer.json',

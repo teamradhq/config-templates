@@ -9,14 +9,22 @@ use Composer\Factory;
 /**
  * Provides global package configuration.
  */
-final readonly class Configuration
+final readonly class Configuration implements ConfiguresPackage
 {
     public function __construct(
         private Factory $factory = new Factory,
     ) {}
 
     /**
-     * Get the directory that this package is installed to.
+     * {@inheritDoc}
+     */
+    public function packageDir(): string
+    {
+        return dirname(__DIR__);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @throws ConfigTemplateException When the project directory cannot be determined.
      */
@@ -34,7 +42,7 @@ final readonly class Configuration
     }
 
     /**
-     * Get the composer file that this package is installed to.
+     * {@inheritDoc}
      *
      * @throws ConfigTemplateException When composer.json is not found.
      */
