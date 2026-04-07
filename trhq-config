@@ -3,7 +3,24 @@
 
 declare(strict_types=1);
 
-require implode(DIRECTORY_SEPARATOR, [__DIR__, 'vendor', 'autoload.php']);
+$dir = __DIR__;
+
+while (true) {
+    $candidate = $dir . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+    if (is_file($candidate)) {
+        require $candidate;
+        break;
+    }
+
+    $parent = dirname($dir);
+
+    if ($parent === $dir) {
+        throw new RuntimeException('Unable to locate Composer autoload.php');
+    }
+
+    $dir = $parent;
+}
 
 use Symfony\Component\Console\Application;
 use TeamRadHQ\ConfigTemplates\Console\InstallTemplate;
