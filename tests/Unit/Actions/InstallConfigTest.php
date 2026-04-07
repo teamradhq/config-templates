@@ -52,26 +52,30 @@ final class InstallConfigTest extends TestCase
             },
         ];
 
+        $configuration = Mockery::mock(ConfiguresPackage::class);
+        $configuration->allows('packageDir')->andReturns(__DIR__);
+        $configuration->allows('projectDir')->andReturns(dirname(__DIR__));
+
         yield 'cannot copy from source file' => [
             'Could not copy from source file.',
-            function (): InstallConfig {
+            function () use ($configuration): InstallConfig {
                 $mock = Mockery::mock(Filesystem::class);
                 $mock->allows('exists')->andReturn(true, false);
                 $mock->allows('copy')->andThrows(FileNotFoundException::class);
 
-                return new InstallConfig('phpstan', filesystem: $mock);
+                return new InstallConfig('phpstan', $configuration, $mock);
             },
         ];
 
         yield 'cannot copy to target file' => [
             'Could not write to destination file.',
-            function (): InstallConfig {
+            function () use ($configuration): InstallConfig {
                 $mock = Mockery::mock(Filesystem::class);
                 $mock->allows('exists')->andReturn(true, false);
                 $mock->allows('copy')
                     ->andThrows(IOException::class);
 
-                return new InstallConfig('phpstan', filesystem: $mock);
+                return new InstallConfig('phpstan', $configuration, $mock);
             },
         ];
     }

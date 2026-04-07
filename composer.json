@@ -4,6 +4,9 @@
   "description": "Reusable configuration templates for various PHP tools.",
   "minimum-stability": "stable",
   "license": "ISC",
+  "bin": [
+    "trhq-config"
+  ],
   "autoload": {
     "psr-4": {
       "TeamRadHQ\\ConfigTemplates\\": "src/"
