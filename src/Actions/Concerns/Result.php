@@ -31,4 +31,11 @@ interface Result
      * @return TResultValue|null
      */
     public function value(): mixed;
+
+    /**
+     * Sets the result.
+     *
+     * @param TResultValue $value
+     */
+    public function set(mixed $value = null): void;
 }

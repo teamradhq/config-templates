@@ -62,13 +62,19 @@ final class FileInfoResult implements Result
     public function value(): array
     {
         if ($this->state === State::Success && count($this->value) !== count($this->locations)) {
-            $this->setValue();
+            $this->set();
         }
 
         return $this->value;
     }
 
-    private function setValue(): void
+    /**
+     * {@inheritDoc}
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function set(mixed $value = null): void
     {
         foreach ($this->locations as $key => $location) {
             $this->value[$key] = new SplFileInfo($location, '', '');
