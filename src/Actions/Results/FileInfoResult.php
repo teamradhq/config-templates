@@ -70,9 +70,6 @@ final class FileInfoResult implements Result
 
     /**
      * {@inheritDoc}
-     *
-     * @param mixed $value
-     * @return void
      */
     public function set(mixed $value = null): void
     {

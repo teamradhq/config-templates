@@ -35,7 +35,7 @@ interface Result
     /**
      * Sets the result.
      *
-     * @param TResultValue $value
+     * @param TResultValue|null $value
      */
     public function set(mixed $value = null): void;
 }

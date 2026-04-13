@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use TeamRadHQ\ConfigTemplates\Actions\InstallConfig;
 use TeamRadHQ\ConfigTemplates\ConfigTemplateException;
+use TeamRadHQ\ConfigTemplates\Data\ConfigPackages;
 use TeamRadHQ\ConfigTemplates\Data\ConfigType;
 
 #[AsCommand(
@@ -40,6 +41,15 @@ final class InstallTemplate
         try {
             $installConfig = new InstallConfig($configType->value);
             $installConfig->run();
+        } catch (ConfigTemplateException $configTemplateException) {
+            $output->writeln('<error>' . $configTemplateException->getMessage() . '</error>');
+
+            return Command::FAILURE;
+        }
+
+        try {
+            (new InstallPackages)->__invoke(ConfigPackages::packages($configType), $output);
+            $output->writeln('<info>Packages installed</info>');
         } catch (ConfigTemplateException $configTemplateException) {
             $output->writeln('<error>' . $configTemplateException->getMessage() . '</error>');
 

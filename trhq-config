@@ -23,12 +23,14 @@ while (true) {
 }
 
 use Symfony\Component\Console\Application;
+use TeamRadHQ\ConfigTemplates\Console\InstallPackages;
 use TeamRadHQ\ConfigTemplates\Console\InstallTemplate;
 use TeamRadHQ\ConfigTemplates\Console\ListTemplates;
 
 $application = new Application;
 $application->addCommand(new ListTemplates);
 $application->addCommand(new InstallTemplate);
+$application->addCommand(new InstallPackages);
 
 try {
     $application->run();

@@ -45,20 +45,20 @@ final class ScalarResultTest extends TestCase
 
     public function test_scalar_value_is_not_mutable(): void
     {
-        $result = ScalarResult::string('foo');
-        $result->set('bar');
+        $scalarResult = ScalarResult::string('foo');
+        $scalarResult->set('bar');
 
-        self::assertSame('foo', $result->value());
+        self::assertSame('foo', $scalarResult->value());
     }
 
     public function test_status_is_set_on_state_finished(): void
     {
-        $result = ScalarResult::string('foo');
-        $initialStatus = $result->status();
-        $result->state(State::Success);
+        $scalarResult = ScalarResult::string('foo');
+        $initialStatus = $scalarResult->status();
+        $scalarResult->state(State::Success);
 
         self::assertNull($initialStatus);
-        self::assertSame(State::Success, $result->state());
-        self::assertSame(0, $result->status());
+        self::assertSame(State::Success, $scalarResult->state());
+        self::assertSame(0, $scalarResult->status());
     }
 }

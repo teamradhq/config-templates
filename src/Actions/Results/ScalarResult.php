@@ -15,19 +15,12 @@ use TeamRadHQ\ConfigTemplates\Actions\Concerns\State;
  */
 final class ScalarResult implements Result
 {
-    /**
-     * @var TValue|null
-     */
     private string|int|float|bool|null $value = null;
 
     private State $state = State::Pending;
 
-    /**
-     * @param ScalarType $type
-     * @param TValue|null $value
-     */
     private function __construct(
-        private readonly ScalarType $type,
+        private readonly ScalarType $scalarType,
         string|int|float|bool|null $value = null,
     ) {
         $this->set($value);
@@ -41,8 +34,10 @@ final class ScalarResult implements Result
      */
     public static function string(mixed $value = null): self
     {
-        /** @var self<string> */
-        return new self(ScalarType::String, $value);
+        /** @var self<string> $self */
+        $self = new self(ScalarType::String, $value);
+
+        return $self;
     }
 
     /**
@@ -53,8 +48,10 @@ final class ScalarResult implements Result
      */
     public static function int(mixed $value = null): self
     {
-        /** @var self<int> */
-        return new self(ScalarType::Integer, $value);
+        /** @var self<int> $self */
+        $self = new self(ScalarType::Integer, $value);
+
+        return $self;
     }
 
     /**
@@ -65,8 +62,10 @@ final class ScalarResult implements Result
      */
     public static function float(mixed $value = null): self
     {
-        /** @var self<float> */
-        return new self(ScalarType::Float, $value);
+        /** @var self<float> $self */
+        $self = new self(ScalarType::Float, $value);
+
+        return $self;
     }
 
     /**
@@ -77,8 +76,10 @@ final class ScalarResult implements Result
      */
     public static function bool(mixed $value = null): self
     {
-        /** @var self<bool> */
-        return new self(ScalarType::Boolean, $value);
+        /** @var self<bool> $self */
+        $self = new self(ScalarType::Boolean, $value);
+
+        return $self;
     }
 
     /**
@@ -86,7 +87,7 @@ final class ScalarResult implements Result
      */
     public function state(?State $state = null): State
     {
-        if ($state !== null) {
+        if ($state instanceof State) {
             $this->state = $state;
         }
 
@@ -112,17 +113,24 @@ final class ScalarResult implements Result
      */
     public function value(): mixed
     {
-        return $this->value;
+        $value = $this->value;
+
+        if (is_null($value)) {
+            return null;
+        }
+
+        /** @var TValue $value */
+        return $value;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param TValue|null $value
+     * @param scalar|null $value
      */
     public function set(mixed $value = null): void
     {
-        if ($this->value === null && gettype($value) === $this->type->value) {
+        if ($this->value === null && gettype($value) === $this->scalarType->value) {
             $this->value = $value;
         }
     }
